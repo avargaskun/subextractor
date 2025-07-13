@@ -1,6 +1,6 @@
 FROM bash:5
 
-RUN apk add --no-cache wget tar xz mkvtoolnix
+RUN apk add --no-cache wget tar xz jq mkvtoolnix
 
 WORKDIR /tmp
 RUN wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz \
