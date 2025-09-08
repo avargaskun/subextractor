@@ -25,12 +25,12 @@ RUN wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.t
 WORKDIR /scripts
 
 # Copy the scripts into the container
-# Ensure extract_ass_to_srt.sh and http_handler.py are in the same directory as the Dockerfile
-COPY extract_ass_to_srt.sh .
-COPY http_handler.py .
+# Ensure extractor.sh and server.py are in the same directory as the Dockerfile
+COPY extractor.sh .
+COPY server.py .
 
 # Make the scripts executable
-RUN chmod +x extract_ass_to_srt.sh http_handler.py
+RUN chmod +x extractor.sh server.py
 
 # Set the default listening port for the server (can be overridden at runtime)
 ENV LISTEN_PORT=8080
@@ -39,5 +39,5 @@ ENV LISTEN_PORT=8080
 EXPOSE 8080
 
 # Set the default command to run the HTTP server when the container starts
-CMD ["python3", "/scripts/http_handler.py"]
+CMD ["python3", "/scripts/server.py"]
 
