@@ -35,6 +35,10 @@ RUN chmod +x extractor.sh server.py
 # Set the default listening port for the server (can be overridden at runtime)
 ENV LISTEN_PORT=8080
 
+# Set the PYTHONUNBUFFERED environment variable to ensure logs are sent
+# directly to the container's stdout without being held in a buffer.
+ENV PYTHONUNBUFFERED=1
+
 # Expose the port to the host
 EXPOSE 8080
 
