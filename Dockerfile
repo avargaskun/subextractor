@@ -1,7 +1,16 @@
-FROM bash:5
+# Use a standard Python base image which is based on Debian
+FROM python:3.13.7-slim-bookworm
 
-# Install dependencies for the bash script and add Python for the server
-RUN apk add --no-cache wget tar xz jq mkvtoolnix python3
+# Install dependencies using Debian's package manager (apt-get)
+# We add 'bash' explicitly to ensure the shell script runs correctly.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    tar \
+    xz-utils \
+    jq \
+    mkvtoolnix \
+    bash \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install ffmpeg and ffprobe statically
 WORKDIR /tmp
@@ -17,11 +26,11 @@ WORKDIR /scripts
 
 # Copy the scripts into the container
 # Ensure extract_ass_to_srt.sh and http_handler.py are in the same directory as the Dockerfile
-COPY extractor.sh .
-COPY server.py .
+COPY extract_ass_to_srt.sh .
+COPY http_handler.py .
 
 # Make the scripts executable
-RUN chmod +x extractor.sh server.py
+RUN chmod +x extract_ass_to_srt.sh http_handler.py
 
 # Set the default listening port for the server (can be overridden at runtime)
 ENV LISTEN_PORT=8080
@@ -30,4 +39,5 @@ ENV LISTEN_PORT=8080
 EXPOSE 8080
 
 # Set the default command to run the HTTP server when the container starts
-CMD ["python3", "/scripts/server.py"]
+CMD ["python3", "/scripts/http_handler.py"]
+
