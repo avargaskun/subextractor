@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 
 # Script to extract ASS subtitles from MKV files and convert them to SRT
 # Usage: ./extract_ass_to_srt.sh [file or directory]

@@ -38,6 +38,10 @@ ENV LISTEN_PORT=8080
 # Expose the port to the host
 EXPOSE 8080
 
+# Override the base image's entrypoint to prevent the startup error.
+# This ensures our CMD is executed directly.
+ENTRYPOINT [""]
+
 # Set the default command to run the HTTP server when the container starts
 CMD ["python3", "/scripts/server.py"]
 
